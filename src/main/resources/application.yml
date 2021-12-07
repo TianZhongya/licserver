@@ -6,4 +6,5 @@ license:
   privateKeysStorePath: ./privateKeys.keystore
   consumerType: User
   consumerAmount: 1
+salt: ihatejava
 

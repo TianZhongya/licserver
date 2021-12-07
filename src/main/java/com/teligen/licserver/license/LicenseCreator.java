@@ -3,6 +3,8 @@ package com.teligen.licserver.license;
 import cn.hutool.json.JSONUtil;
 import de.schlichtherle.license.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.security.auth.x500.X500Principal;
 import java.io.File;
@@ -16,6 +18,9 @@ import java.util.prefs.Preferences;
 public class LicenseCreator {
     private final static X500Principal DEFAULT_HOLDER_AND_ISSUER = new X500Principal("CN=Tian, OU=HZ, O=HZ, L=BJ, ST=BJ, C=CN");
     private LicenseCreatorParam param;
+
+    @Value("${salt}")
+    private String salt;
 
     public LicenseCreator(LicenseCreatorParam param) {
         this.param = param;
@@ -69,7 +74,7 @@ public class LicenseCreator {
         licenseContent.setInfo(param.getDescription());
 
         //扩展校验服务器硬件信息
-        licenseContent.setExtra(JSONUtil.toJsonStr(param.getHardware()));
+        licenseContent.setExtra(JSONUtil.toJsonStr(DigestUtils.sha256Hex(param.getHardware()+salt)));
 
         return licenseContent;
     }
