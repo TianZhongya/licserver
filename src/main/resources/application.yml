@@ -1,0 +1,9 @@
+license:
+  privateAlias: privateKey
+  keyPwd: private_password1234
+  storePwd: public_password1234
+  licensePath: ./license.lic
+  privateKeysStorePath: ./privateKeys.keystore
+  consumerType: User
+  consumerAmount: 1
+
